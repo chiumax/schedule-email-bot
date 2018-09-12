@@ -5,7 +5,7 @@ Pretty shabby email/discord bot I built to save the inconvenience for looking at
 
 The school I go to groups classes into flexible 'blocks' of time. These 'blocks' of time are prone to change everyday and they are published on a google sheets. Instead of actually visiting the sheets page everyday, why not just send it/email it to you?
 
-I'll admit that the code here is not 100% reusable since a lot of things were special cases when I was scraping the schedules.
+Even if not meant to be reused, I'll admit that the code here is not 100% reusable since a lot of things were special cases when I was scraping the schedules.
 
 ## TO-DO
 - [ ] Add a different good morning message everyday
