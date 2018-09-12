@@ -12,3 +12,4 @@ I'll admit that the code here is not 100% reusable since a lot of things were sp
 - [ ] Parse extra data in the schedule so formatting looks nice
 - [ ] Add some screenshots
 - [ ] Credit dependencies
+- [ ] Add more comments
