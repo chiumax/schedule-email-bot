@@ -31,6 +31,8 @@ Even if not meant to be reused, I'll admit that the code here is not 100% reusab
 - [ ] Credit dependencies
 - [ ] Add more comments
 
+## Screenshots :camera:
+
 ## Code Style :art:
 
 -   I use the [Prettier](https://prettier.io/) code formatter for js (default settings from the vs-code extension except for line width set to 100).
