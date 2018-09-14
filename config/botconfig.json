@@ -1,0 +1,10 @@
+{
+  "prefix": "!",
+  "email": [""],
+  "auth": {
+    "email": "",
+    "pass": ""
+  },
+  "channel": "",
+  "url": ""
+}
