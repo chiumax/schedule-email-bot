@@ -34,10 +34,10 @@ let botconfig = JSON.parse(botconfigRaw);
 // NODE SCHEDULE STUFF
 var rule = new schedule.RecurrenceRule();
 // EVERY WEEKDAY AT 6:30
-rule.hour = 6;
+rule.hour = 22;
 // MONDAY THROUGH FRIDAY. WHOLE RANGE IS 0-6
 rule.dayOfWeek = new schedule.Range(1, 5);
-rule.minute = [30, 31];
+rule.minute = [48, 49];
 
 // NODEMAILER STUFF
 var transporter = nodemailer.createTransport({
@@ -59,7 +59,6 @@ const today = moment()
 let row = "";
 let msg = "";
 let discordMsg = "";
-let temp = "";
 
 // ADD EMAILS TO THI LIST
 const emailsTo = botconfig.email;
@@ -108,11 +107,8 @@ _____/ /_  ___  ___  / /______
     row = "";
     msg = "";
     discordMsg = "";
-    temp = "";
     day = "";
-    ifTag = false;
     tempDay = 0;
-    lengthE = 0;
     rp(options).then($ => {
       $("td").each(function(i, elem) {
         if (today === $(this).text()) {
