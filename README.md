@@ -31,6 +31,8 @@ Even if not meant to be reused, I'll admit that the code here is not 100% reusab
 - [ ] Credit dependencies
 - [ ] Add more comments
 
+## SETUP :wrench:
+
 ## Screenshots :camera:
 
 ## Code Style :art:
