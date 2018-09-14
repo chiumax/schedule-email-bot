@@ -3,6 +3,8 @@
 
 Pretty shabby email/discord bot written in JS. I built this to save the inconvenience for looking at google drive for schedules.
 
+Special thanks to [Aidan](https://github.com/aidangoettsch).
+
 ## Background :flags:
 
 The school I go to groups classes into flexible 'blocks' of time. These 'blocks' of time are prone to change everyday and they are published on a google sheets. Instead of actually visiting the sheets page everyday, why not just send it/email it to you?
@@ -25,8 +27,8 @@ Even if not meant to be reused, I'll admit that the code here is not 100% reusab
 
 
 ## TO-DO :white_check_mark:
-- [ ] Add a different good morning message everyday
-- [ ] Parse extra data in the schedule so formatting looks nice
+- [x] Add a different good morning message everyday
+- [x] Parse extra data in the schedule so formatting looks nice
 - [ ] Add some screenshots
 - [ ] Credit dependencies
 - [ ] Add more comments
