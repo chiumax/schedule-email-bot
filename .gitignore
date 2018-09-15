@@ -63,3 +63,6 @@ typings/
 
 # test files
 test/
+#config
+config/
+config/token.json

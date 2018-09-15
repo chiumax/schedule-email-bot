@@ -34,10 +34,10 @@ let botconfig = JSON.parse(botconfigRaw);
 // NODE SCHEDULE STUFF
 var rule = new schedule.RecurrenceRule();
 // EVERY WEEKDAY AT 6:30
-rule.hour = 22;
+rule.hour = 23;
 // MONDAY THROUGH FRIDAY. WHOLE RANGE IS 0-6
 rule.dayOfWeek = new schedule.Range(1, 5);
-rule.minute = [48, 49];
+rule.minute = [7, 8];
 
 // NODEMAILER STUFF
 var transporter = nodemailer.createTransport({
@@ -59,6 +59,7 @@ const today = moment()
 let row = "";
 let msg = "";
 let discordMsg = "";
+let specialCase = [];
 
 // ADD EMAILS TO THI LIST
 const emailsTo = botconfig.email;
@@ -90,6 +91,7 @@ const rowNext = (rownum, degree) => {
 // check would then set be false and both the desired and undesired schedules would be printed
 // In case if there was anything that was actually important.
 let check = true;
+const classNames = ["Bio", "CS", "ESS", "POE"];
 
 bot.on("ready", async () => {
   console.log(`
@@ -102,143 +104,151 @@ _____/ /_  ___  ___  / /______
 `);
   console.log(`${bot.user.username} is online!`);
   bot.user.setActivity("with Gerard ;)");
-  schedule.scheduleJob(rule, function() {
-    // Just in case if something goes wrong, these variables are reset
-    row = "";
-    msg = "";
-    discordMsg = "";
-    day = "";
-    tempDay = 0;
-    rp(options).then($ => {
-      $("td").each(function(i, elem) {
-        if (today === $(this).text()) {
-          row = $(this)
-            .parent()
-            .children()
-            .first()
-            .attr("id");
-          rowNext(row, 2);
-          day =
-            week.indexOf(
-              $(this)
-                .prev()
-                .text()
-            ) + 1;
-          // Initialize some text. Found out that the class names didn't have special css class names
-          // Since there wern't too many, I manually added it to the message.
-          discordMsg =
+  //schedule.scheduleJob(rule, function() {
+  // Just in case if something goes wrong, these variables are reset
+  row = "";
+  msg = "";
+  discordMsg = "";
+  day = "";
+  tempDay = 0;
+  specialCase = [];
+  rp(options).then($ => {
+    $("td").each(function(i, elem) {
+      if (today === $(this).text()) {
+        row = $(this)
+          .parent()
+          .children()
+          .first()
+          .attr("id");
+        rowNext(row, 2);
+        day =
+          week.indexOf(
             $(this)
               .prev()
-              .text() +
-            " " +
-            $(this).text() +
-            "\n     BIO  C.S  ESS  POE\n";
-          msg =
-            '<tr style="height:20px;">' +
-            $(this)
-              .prev()
-              .html() +
-            " " +
-            $(this).html() +
-            "</tr>" +
-            '<tr style="height:20px;"> <td class="s1"></td><td class="s1">Bio </td><td class="s1">CS </td><td class="s1">ESS </td><td class="s5">POE </td> </tr>';
-        }
-        if (
-          row ===
+              .text()
+          ) + 1;
+        // Initialize some text. Found out that the class names didn't have special css class names
+        // Since there wern't too many, I manually added it to the message.
+        discordMsg =
           $(this)
-            .parent()
-            .children()
-            .first()
-            .attr("id")
-        ) {
-          if (!!Number($(this).text())) {
-            tempDay += 1;
-            if (day == tempDay) {
-              if ($(this).attr("class") === "s1") {
-                msg +=
-                  '<tr style="height:20px;">' + $.html(this) + $(this).nextUntil(".s1") + "</tr>";
-              } else {
-                msg +=
-                  '<tr style="height:20px;">' + $.html(this) + $(this).nextUntil(".s0") + "</tr>";
+            .prev()
+            .text() +
+          " " +
+          $(this).text() +
+          "\n      BIO C.S ESS POE\n";
+        msg =
+          '<tr style="height:20px;">' +
+          $(this)
+            .prev()
+            .html() +
+          " " +
+          $(this).html() +
+          "</tr>" +
+          '<tr style="height:20px;"> <td class="s1"></td><td class="s1">Bio </td><td class="s1">CS </td><td class="s1">ESS </td><td class="s5">POE </td> </tr>';
+      }
+      if (
+        row ===
+        $(this)
+          .parent()
+          .children()
+          .first()
+          .attr("id")
+      ) {
+        if (!!Number($(this).text())) {
+          tempDay += 1;
+          if (day == tempDay) {
+            if ($(this).attr("class") === "s1") {
+              msg +=
+                '<tr style="height:20px;">' + $.html(this) + $(this).nextUntil(".s1") + "</tr>";
+            } else {
+              msg +=
+                '<tr style="height:20px;">' + $.html(this) + $(this).nextUntil(".s0") + "</tr>";
+            }
+            // kinda pissed that I had to resort to such vile ways of parsing data
+            // I couldn't just get the text into a list from nextUntil
+            // Thank god the schedule table isn't too big so this was feasible.
+            let plainText = [
+              $(this).text(),
+              $(this)
+                .next()
+                .text(),
+              $(this)
+                .next()
+                .next()
+                .text(),
+              $(this)
+                .next()
+                .next()
+                .next()
+                .text(),
+              $(this)
+                .next()
+                .next()
+                .next()
+                .next()
+                .text()
+            ];
+            plainText.forEach((element, index) => {
+              if (index != 0) {
+                if (/[^xy]/gi.test(element)) {
+                  specialCase.push(
+                    `During period ${$(this).text()} and under ${
+                      classNames[index - 1]
+                    }, the text ${element} is on the schedule. \n`
+                  );
+                }
+                if (check === true) {
+                  element = element.replace(/[^xy]/gi, "");
+                }
               }
-              // kinda pissed that I had to resort to such vile ways of parsing data
-              // I couldn't just get the text into a list from nextUntil
-              // Thank god the schedule table isn't too big so this was feasible.
-              let plainText = [
-                $(this).text(),
-                $(this)
-                  .next()
-                  .text(),
-                $(this)
-                  .next()
-                  .next()
-                  .text(),
-                $(this)
-                  .next()
-                  .next()
-                  .next()
-                  .text(),
-                $(this)
-                  .next()
-                  .next()
-                  .next()
-                  .next()
-                  .text()
-              ];
-              plainText.forEach((element, index) => {
-                if (index != 0) {
-                  if (check === true) {
-                    element = element.replace(/[^xy]/gi, "");
-                  }
-                }
-                if (!!element) {
-                  discordMsg += "   " + element;
-                } else {
-                  discordMsg += "   -";
-                }
-              });
-              discordMsg += "\n";
-              rowNext(row, 1);
-              tempDay = 0;
-            }
-          } else if (!!$(this).attr("colspan")) {
-            tempDay += 1;
-            if (day == tempDay) {
-              discordMsg += $(this).text();
-              msg += '<tr style="height:20px;">' + $.html(this) + "</tr>";
-            }
+              if (!!element) {
+                discordMsg += "   " + element;
+              } else {
+                discordMsg += "   -";
+              }
+            });
+            discordMsg += "\n";
+            rowNext(row, 1);
+            tempDay = 0;
+          }
+        } else if (!!$(this).attr("colspan")) {
+          tempDay += 1;
+          if (day == tempDay) {
+            discordMsg += $(this).text();
+            msg += '<tr style="height:20px;">' + $.html(this) + "</tr>";
           }
         }
-      });
+      }
+    });
 
-      mailOptions.html =
-        '<div class="ritz grid-container" dir="ltr"><table class="waffle no-grid" cellspacing="0" cellpadding="0">' +
-        msg +
-        "</table></dir>";
-      // DYNAMIC SUBJECT HEADER FOR EMAIL. CHANGES EVERYDAY
-      mailOptions.subject =
-        "Poolesville Blocking Schedule for " + moment().format("dddd, MMMM Do, YYYY");
-      // THIS IS WHAT ACTUALLY SENDS THE MAIL.
-      transporter.sendMail(mailOptions, function(err, info) {
-        if (err) {
-          console.log(err);
-        } else {
-          check = !check;
-          console.log(msg);
-          console.log(info);
-          console.log(discordMsg);
-          discordMsg =
-            "**" +
-            quotes[Math.floor(Math.random() * quotes.length)] +
-            "** \n" +
-            "```" +
-            discordMsg +
-            "```";
-          bot.channels.get(botconfig.channel).send(discordMsg);
-        }
-      });
+    mailOptions.html =
+      '<div class="ritz grid-container" dir="ltr"><table class="waffle no-grid" cellspacing="0" cellpadding="0">' +
+      msg +
+      "</table></dir>";
+    // DYNAMIC SUBJECT HEADER FOR EMAIL. CHANGES EVERYDAY
+    mailOptions.subject =
+      "Poolesville Blocking Schedule for " + moment().format("dddd, MMMM Do, YYYY");
+    // THIS IS WHAT ACTUALLY SENDS THE MAIL.
+    transporter.sendMail(mailOptions, function(err, info) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(msg);
+        console.log(info);
+        console.log(discordMsg);
+        discordMsg =
+          "**" +
+          quotes[Math.floor(Math.random() * quotes.length)] +
+          "** \n" +
+          "```" +
+          discordMsg +
+          specialCase.join("") +
+          "```";
+        bot.channels.get(botconfig.channel).send(discordMsg);
+      }
     });
   });
 });
+//});
 
 bot.login(tokenFile.token);
