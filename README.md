@@ -29,14 +29,28 @@ Even if not meant to be reused, I'll admit that the code here is not 100% reusab
 ## TO-DO :white_check_mark:
 - [x] Add a different good morning message everyday
 - [x] Parse extra data in the schedule so formatting looks nice
-- [ ] Add some screenshots
-- [ ] Credit dependencies
+- [x] Add some screenshots
+- [x] Credit dependencies
 - [ ] Add more comments
 
 ## SETUP :wrench:
 
-## Screenshots :camera:
+1. Clone Repository
+2. `yarn install` or `npm install` whatever you like.
+3.
 
+## Screenshots :camera:
+![discord](https://github.com/dumblole/schedule-email-bot/blob/master/image/Discord_2018-09-14_22-18-15.png)
+
+![discord](https://github.com/dumblole/schedule-email-bot/blob/master/image/Discord_2018-09-14_22-19-26.png)
+
+![gmail](https://github.com/dumblole/schedule-email-bot/blob/master/image/chrome_2018-09-14_22-21-55.png)
+
+*Formatting still leaves a lot to be desired*
+
+![original](https://github.com/dumblole/schedule-email-bot/blob/master/image/chrome_2018-09-14_22-22-11.png)
+
+*Example of what my bot parses*
 ## Code Style :art:
 
 -   I use the [Prettier](https://prettier.io/) code formatter for js (default settings from the vs-code extension except for line width set to 100).
