@@ -31,13 +31,8 @@ Even if not meant to be reused, I'll admit that the code here is not 100% reusab
 - [x] Parse extra data in the schedule so formatting looks nice
 - [x] Add some screenshots
 - [x] Credit dependencies
-- [ ] Add more comments
+- [x] Add more comments
 
-## SETUP :wrench:
-
-1. Clone Repository
-2. `yarn install` or `npm install` whatever you like.
-3.
 
 ## Screenshots :camera:
 ![discord](https://github.com/dumblole/schedule-email-bot/blob/master/image/Discord_2018-09-14_22-18-15.png)
