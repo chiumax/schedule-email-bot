@@ -53,7 +53,7 @@ var transporter = nodemailer.createTransport({
 const week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 let day = "";
 let tempDay = 0;
-const today = moment()
+let today = moment()
   //.date(11)
   .format("M/D/YYYY");
 let row = "";
@@ -107,6 +107,9 @@ _____/ /_  ___  ___  / /______
   schedule.scheduleJob(rule, function() {
     // Just in case if something goes wrong, these variables are reset
     row = "";
+    today = moment()
+      //.date(11)
+      .format("M/D/YYYY");
     msg = "";
     discordMsg = "";
     day = "";
@@ -250,5 +253,5 @@ _____/ /_  ___  ___  / /______
     });
   });
 });
-
+bot.on("error", console.error);
 bot.login(tokenFile.token);
