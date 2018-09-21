@@ -32,6 +32,7 @@ Even if not meant to be reused, I'll admit that the code here is not 100% reusab
 - [x] Add some screenshots
 - [x] Credit dependencies
 - [x] Add more comments
+- [x] 'Forecast' of tomorrow's schedule
 
 
 ## Screenshots :camera:
