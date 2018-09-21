@@ -34,7 +34,7 @@ let botconfig = JSON.parse(botconfigRaw);
 // NODE SCHEDULE STUFF
 var rule = new schedule.RecurrenceRule();
 // EVERY WEEKDAY AT 6:30
-rule.hour = 6;
+rule.hour = [6, 20];
 // MONDAY THROUGH FRIDAY. WHOLE RANGE IS 0-6
 rule.dayOfWeek = new schedule.Range(1, 5);
 rule.minute = [30];
@@ -107,9 +107,34 @@ _____/ /_  ___  ___  / /______
   schedule.scheduleJob(rule, function() {
     // Just in case if something goes wrong, these variables are reset
     row = "";
-    today = moment()
-      //.date(11)
-      .format("M/D/YYYY");
+
+    // I HATE MYSELF I KEEP WRITING THICC ONE LINERS
+    // basically the purpose of this blocc of code is to show a forecast
+    // of tomorrow's schedule at 8 or 9 pm.
+    // first of all, I had to check if it was pm or am
+    // since the simplest format of moment's hours was 24,
+    // check if its after 12
+    // If it isn't, just proceed along and print out the original schedule
+    // for the day.
+    // If it is after 12 aka pm, check if it is friday
+    // if it isn't friday, just print out tomorrow's schedule
+    // If it is, then get the next monday's schedule
+    // EXAMPLE of how moment().day() works
+    // moment().day(-7); // last Sunday (0 - 7)
+    // moment().day(0); // this Sunday (0)
+    // moment().day(7); // next Sunday (0 + 7)
+    // moment().day(10); // next Wednesday (3 + 7)
+    // moment().day(24); // 3 Wednesdays from now (3 + 7 + 7 + 7)
+    today =
+      moment().format("H") > 12
+        ? moment().day() == 5
+          ? moment()
+              .day(8)
+              .format("M/D/YYYY")
+          : moment()
+              .day(moment().day() + 1)
+              .format("M/D/YYYY")
+        : moment().format("M/D/YYYY");
     msg = "";
     discordMsg = "";
     day = "";
@@ -229,8 +254,7 @@ _____/ /_  ___  ___  / /______
         msg +
         "</table></dir>";
       // DYNAMIC SUBJECT HEADER FOR EMAIL. CHANGES EVERYDAY
-      mailOptions.subject =
-        "Poolesville Blocking Schedule for " + moment().format("dddd, MMMM Do, YYYY");
+      mailOptions.subject = "Poolesville Blocking Schedule for " + today;
       // THIS IS WHAT ACTUALLY SENDS THE MAIL.
       transporter.sendMail(mailOptions, function(err, info) {
         if (err) {
@@ -241,7 +265,9 @@ _____/ /_  ___  ___  / /______
           console.log(discordMsg);
           discordMsg =
             "**" +
-            quotes[Math.floor(Math.random() * quotes.length)] +
+            (moment().format("H") > 12
+              ? "Tomorrow's forecast!"
+              : quotes[Math.floor(Math.random() * quotes.length)]) +
             "** \n" +
             "```" +
             discordMsg +
