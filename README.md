@@ -40,6 +40,8 @@ Even if not meant to be reused, I'll admit that the code here is not 100% reusab
 
 ![discord](https://github.com/dumblole/schedule-email-bot/blob/master/image/Discord_2018-09-14_22-19-26.png)
 
+![discord](https://github.com/dumblole/schedule-email-bot/blob/master/image/Capture.PNG)
+
 ![gmail](https://github.com/dumblole/schedule-email-bot/blob/master/image/chrome_2018-09-14_22-21-55.png)
 
 *Formatting still leaves a lot to be desired*
