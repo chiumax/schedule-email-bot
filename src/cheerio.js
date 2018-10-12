@@ -33,7 +33,7 @@ let botconfig = JSON.parse(botconfigRaw);
 
 // NODE SCHEDULE STUFF
 var rule = new schedule.RecurrenceRule();
-// EVERY WEEKDAY AT 6:30
+// EVERY WEEKDAY AT 7:30 am 8:30 pm
 rule.hour = [6, 20];
 // MONDAY THROUGH FRIDAY. WHOLE RANGE IS 0-6
 rule.dayOfWeek = new schedule.Range(1, 5);
@@ -263,19 +263,19 @@ _____/ /_  ___  ___  / /______
           console.log(msg);
           console.log(info);
           console.log(discordMsg);
-          discordMsg =
-            "**" +
-            (moment().format("H") > 12
-              ? "Tomorrow's forecast!"
-              : quotes[Math.floor(Math.random() * quotes.length)]) +
-            "** \n" +
-            "```" +
-            discordMsg +
-            specialCase.join("") +
-            "```";
-          bot.channels.get(botconfig.channel).send(discordMsg);
         }
       });
+      discordMsg =
+        "**" +
+        (moment().format("H") > 12
+          ? "The next day on the schedule is:"
+          : quotes[Math.floor(Math.random() * quotes.length)]) +
+        "** m" +
+        "```" +
+        discordMsg +
+        specialCase.join("") +
+        "```";
+      bot.channels.get(botconfig.channel).send(discordMsg);
     });
   });
 });
