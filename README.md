@@ -1,7 +1,7 @@
 # Schedule Email Bot :envelope:
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Pretty shabby email/discord bot written in JS. I built this to save the inconvenience for looking at google drive for schedules.
+Pretty shabby email/discord bot written in JS. I built this to save the inconvenience of looking at google drive for schedules.
 
 Special thanks to [Aidan](https://github.com/aidangoettsch).
 
